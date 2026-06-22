@@ -38,9 +38,11 @@ export default function TryOnWorkspace({ product }: TryOnWorkspaceProps) {
         await initializeMediaPipe();
 
         // Detect landmarks
-        const face = detectFace(image.canvas);
-        const hands = detectHands(image.canvas);
-        const pose = detectPose(image.canvas);
+        const [face, hands, pose] = await Promise.all([
+          detectFace(image.canvas),
+          detectHands(image.canvas),
+          detectPose(image.canvas),
+        ]);
 
         setFaceLandmarks(face);
         setHandLandmarks(hands);
