@@ -117,7 +117,7 @@ export default function PreviewCanvas({ product, asset }: PreviewCanvasProps) {
       const placements = calculatePlacements(product, asset, controls, width, height, face, hands, pose);
 
       if (!controls.showBefore) {
-        placements.forEach((placement) => drawAsset(ctx, asset, placement));
+        placements.forEach((placement) => drawAsset(ctx, asset, placement, controls.mirror));
       }
 
       setDetectionStatus(getDetectionStatus(product.placementArea, face, hands, pose));
@@ -371,11 +371,18 @@ function placeNoseRing(
   };
 }
 
-function drawAsset(ctx: CanvasRenderingContext2D, asset: JewelleryAsset, placement: Placement) {
+function drawAsset(ctx: CanvasRenderingContext2D, asset: JewelleryAsset, placement: Placement, mirror?: boolean) {
   ctx.save();
   ctx.translate(placement.x, placement.y);
   ctx.rotate(placement.rotation);
-  ctx.drawImage(asset.canvas, -placement.width / 2, -placement.height / 2, placement.width, placement.height);
+
+  if (mirror) {
+    ctx.scale(-1, 1);
+    ctx.drawImage(asset.canvas, -placement.width / 2 * -1, -placement.height / 2, placement.width, placement.height);
+  } else {
+    ctx.drawImage(asset.canvas, -placement.width / 2, -placement.height / 2, placement.width, placement.height);
+  }
+
   ctx.restore();
 }
 

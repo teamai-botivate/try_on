@@ -130,6 +130,7 @@ export interface JewelleryControls {
   pan: { x: number; y: number };
   showBefore: boolean;
   fullscreen: boolean;
+  mirror?: boolean;
 }
 
 // API Response types

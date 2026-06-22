@@ -28,6 +28,7 @@ const defaultControls: JewelleryControls = {
   pan: { x: 0, y: 0 },
   showBefore: false,
   fullscreen: false,
+  mirror: false,
 };
 
 const defaultState: TryOnState = {
