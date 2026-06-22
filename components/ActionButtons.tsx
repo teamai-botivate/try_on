@@ -7,7 +7,6 @@ import { useTryOnStore } from "@/lib/store";
 
 export default function ActionButtons() {
   const [downloading, setDownloading] = useState(false);
-  const [downloadFormat, setDownloadFormat] = useState<"png" | "jpg">("png");
   const [showFormatMenu, setShowFormatMenu] = useState(false);
 
   const image = useTryOnStore((state) => state.image);
