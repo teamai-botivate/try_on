@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
-import { processImage, validateImageFile } from "@/lib/image-processing";
+import { processImage } from "@/lib/image-processing";
+import { validateImageFile } from "@/lib/image-loader";
 import type { ProcessedImage } from "@/types";
 
 interface UseImageProcessingOptions {
