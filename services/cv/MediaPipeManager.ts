@@ -77,6 +77,7 @@ class MediaPipeManager {
       this.state.imageSegmenter = imageSegmenter;
       this.state.isInitialized = true;
       this.retryCount = 0;
+      console.log('✅ MediaPipe initialized successfully');
     } catch (error) {
       this.state.error = error instanceof Error ? error : new Error(String(error));
 
@@ -106,7 +107,6 @@ class MediaPipeManager {
 
     return FaceLandmarker.createFromOptions(filesetResolver, {
       baseOptions: {
-        modelAssetPath: 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.9/wasm/face_landmarker.tflite',
         delegate: 'GPU',
       },
       runningMode: 'IMAGE',
@@ -119,7 +119,6 @@ class MediaPipeManager {
 
     return HandLandmarker.createFromOptions(filesetResolver, {
       baseOptions: {
-        modelAssetPath: 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.9/wasm/hand_landmarker.tflite',
         delegate: 'GPU',
       },
       runningMode: 'IMAGE',
@@ -132,7 +131,6 @@ class MediaPipeManager {
 
     return PoseLandmarker.createFromOptions(filesetResolver, {
       baseOptions: {
-        modelAssetPath: 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.9/wasm/pose_landmarker_lite.tflite',
         delegate: 'GPU',
       },
       runningMode: 'IMAGE',
@@ -144,7 +142,6 @@ class MediaPipeManager {
 
     return ImageSegmenter.createFromOptions(filesetResolver, {
       baseOptions: {
-        modelAssetPath: 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.9/wasm/selfie_segmenter.tflite',
         delegate: 'GPU',
       },
       runningMode: 'IMAGE',
