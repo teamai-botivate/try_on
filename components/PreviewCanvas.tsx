@@ -2,14 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import type { ProcessedImage, FaceLandmarks, HandLandmarks, PoseLandmarks } from "@/types";
+import type { ProcessedImage, FaceLandmarks, HandLandmarks } from "@/types";
 import { useTryOnStore } from "@/lib/store";
 
 interface PreviewCanvasProps {
   image: ProcessedImage;
   faceLandmarks: FaceLandmarks | null;
   handLandmarks: HandLandmarks[] | null;
-  poseLandmarks: PoseLandmarks | null;
   isProcessing: boolean;
 }
 
@@ -17,7 +16,6 @@ export default function PreviewCanvas({
   image,
   faceLandmarks,
   handLandmarks,
-  poseLandmarks,
   isProcessing,
 }: PreviewCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);

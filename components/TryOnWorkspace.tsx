@@ -158,10 +158,8 @@ export default function TryOnWorkspace({ product }: TryOnWorkspaceProps) {
           <div className="card overflow-hidden w-full">
             <PreviewCanvas
               image={image}
-              product={product}
               faceLandmarks={faceLandmarks}
               handLandmarks={handLandmarks}
-              poseLandmarks={poseLandmarks}
               isProcessing={isProcessing}
             />
           </div>
@@ -173,7 +171,7 @@ export default function TryOnWorkspace({ product }: TryOnWorkspaceProps) {
           animate={{ opacity: 1, x: 0 }}
           className="hidden lg:block lg:col-span-1 w-full"
         >
-          <ControlPanel product={product} />
+          <ControlPanel />
         </motion.div>
       </div>
 
@@ -218,7 +216,7 @@ export default function TryOnWorkspace({ product }: TryOnWorkspaceProps) {
             transition={{ duration: 0.3 }}
             className="mt-3 sm:mt-4 w-full"
           >
-            <ControlPanel product={product} />
+            <ControlPanel />
           </motion.div>
         )}
       </motion.div>
