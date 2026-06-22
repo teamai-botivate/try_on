@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { motion } from "framer-motion";
 import { useTryOnStore } from "@/lib/store";
 import { validateImageFile } from "@/lib/image-loader";
 import { processImage } from "@/lib/image-processing";
@@ -60,23 +59,17 @@ export default function ImageUpload() {
   return (
     <div className="w-full space-y-3 sm:space-y-4">
       {/* Dropzone - Mobile First */}
-      <motion.div
+      <div
         {...getRootProps()}
         className={`relative border-2 border-dashed rounded-lg p-6 sm:p-8 md:p-10 text-center cursor-pointer transition-colors w-full min-h-48 sm:min-h-56 flex items-center justify-center ${
           isDragActive
             ? "border-amber-500 bg-amber-50"
             : "border-gray-300 hover:border-gray-400"
         } ${uploading ? "opacity-50 cursor-not-allowed" : ""}`}
-        whileHover={{ scale: 1.01 }}
       >
         <input {...getInputProps()} />
 
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="w-full"
-        >
+        <div className="w-full">
           {uploading ? (
             <div className="space-y-2 sm:space-y-3">
               <div className="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 border-amber-500 mx-auto"></div>
@@ -120,19 +113,15 @@ export default function ImageUpload() {
               )}
             </>
           )}
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
 
       {/* Error Message */}
       {error && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="p-3 sm:p-4 bg-red-50 border border-red-200 rounded-lg text-xs sm:text-sm text-red-700 w-full"
-        >
+        <div className="p-3 sm:p-4 bg-red-50 border border-red-200 rounded-lg text-xs sm:text-sm text-red-700 w-full">
           <p className="font-semibold mb-1">⚠️ Error</p>
           <p>{error}</p>
-        </motion.div>
+        </div>
       )}
 
       {/* Alternative Upload Divider */}
@@ -146,7 +135,7 @@ export default function ImageUpload() {
       </div>
 
       {/* Paste Button - Touch friendly */}
-      <motion.button
+      <button
         onClick={() => {
           navigator.clipboard.read().then((items) => {
             items.forEach((item) => {
@@ -160,11 +149,9 @@ export default function ImageUpload() {
         }}
         disabled={uploading}
         className="w-full btn-secondary text-sm sm:text-base"
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
       >
         📋 Paste from Clipboard
-      </motion.button>
+      </button>
     </div>
   );
 }
