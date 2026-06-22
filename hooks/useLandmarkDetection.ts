@@ -36,17 +36,17 @@ export function useLandmarkDetection(
       await initializeMediaPipe();
 
       if (shouldDetectFace) {
-        const face = detectFace(canvas);
+        const face = await detectFace(canvas);
         setFaceLandmarks(face);
       }
 
       if (shouldDetectHands) {
-        const hands = detectHands(canvas);
+        const hands = await detectHands(canvas);
         setHandLandmarks(hands);
       }
 
       if (shouldDetectPose) {
-        const pose = detectPose(canvas);
+        const pose = await detectPose(canvas);
         setPoseLandmarks(pose);
       }
 
