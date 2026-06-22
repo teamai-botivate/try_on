@@ -282,7 +282,6 @@ function estimateHeadRotation(landmarks: Array<{ x: number; y: number; z: number
 
   // Calculate angles
   const eyeDistance = Math.hypot(rightEye.x - leftEye.x, rightEye.y - leftEye.y);
-  const mouthDistance = Math.hypot(rightMouth.x - leftMouth.x, rightMouth.y - leftMouth.y);
 
   const yaw = Math.atan2(noseTip.x - (leftEye.x + rightEye.x) / 2, eyeDistance);
   const pitch = Math.atan2(noseTip.y - (leftEye.y + rightEye.y) / 2, eyeDistance);
