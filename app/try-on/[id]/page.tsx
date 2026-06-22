@@ -19,7 +19,6 @@ export default function TryOnPage() {
   const [imageUploaded, setImageUploaded] = useState(false);
 
   const setStoreProduct = useTryOnStore((state: any) => state.setProduct);
-  const setImage = useTryOnStore((state: any) => state.setImage);
   const storeProduct = useTryOnStore((state: any) => state.product);
   const storeImage = useTryOnStore((state: any) => state.image);
 
