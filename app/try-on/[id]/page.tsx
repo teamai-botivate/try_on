@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import type { JewelleryProduct, ProcessedImage } from "@/types";
+import type { JewelleryProduct } from "@/types";
 import { loadProductById } from "@/lib/image-loader";
 import { useTryOnStore } from "@/lib/store";
 import ImageUpload from "@/components/ImageUpload";
