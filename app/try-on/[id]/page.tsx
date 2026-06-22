@@ -18,10 +18,10 @@ export default function TryOnPage() {
   const [loading, setLoading] = useState(true);
   const [imageUploaded, setImageUploaded] = useState(false);
 
-  const setProduct: any = useTryOnStore((state) => state.setProduct);
-  const setImage: any = useTryOnStore((state) => state.setImage);
-  const storeProduct = useTryOnStore((state) => state.product);
-  const storeImage = useTryOnStore((state) => state.image);
+  const setStoreProduct = useTryOnStore((state: any) => state.setProduct);
+  const setImage = useTryOnStore((state: any) => state.setImage);
+  const storeProduct = useTryOnStore((state: any) => state.product);
+  const storeImage = useTryOnStore((state: any) => state.image);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -35,9 +35,9 @@ export default function TryOnPage() {
 
   useEffect(() => {
     if (product && !storeProduct) {
-      setProduct(product);
+      setStoreProduct(product);
     }
-  }, [product, storeProduct, setProduct]);
+  }, [product, storeProduct, setStoreProduct]);
 
   useEffect(() => {
     if (storeImage) {
