@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import type { JewelleryProduct } from "@/types";
 import { useTryOnStore } from "@/lib/store";
 import { initializeMediaPipe, detectFace, detectHands, detectPose } from "@/services/mediapipe-service";
-import { calculatePlacement } from "@/lib/placement-engine";
 import PreviewCanvas from "./PreviewCanvas";
 import ControlPanel from "./ControlPanel";
 import QualityWarnings from "./QualityWarnings";
