@@ -1,118 +1,121 @@
+'use client';
+
 import type { FaceLandmarks, HandLandmarks, PoseLandmarks, ImageSegmentation } from "@/types";
 
-let faceDetectorReady = false;
-let handDetectorReady = false;
-let poseDetectorReady = false;
-let segmenterReady = false;
+// Lazy-loaded instances - only on client side
+let faceLandmarker: any = null;
+let handLandmarker: any = null;
+let poseLandmarker: any = null;
+let imageSegmenter: any = null;
 
-const loadScript = (src: string): Promise<void> => {
-  return new Promise((resolve, reject) => {
-    if (document.querySelector(`script[src="${src}"]`)) {
-      resolve();
-      return;
-    }
+let initPromise: Promise<void> | null = null;
 
-    const script = document.createElement("script");
-    script.src = src;
-    script.async = true;
-    script.onload = () => resolve();
-    script.onerror = () => reject(new Error(`Failed to load ${src}`));
-    document.head.appendChild(script);
+const isClient = typeof window !== 'undefined';
+
+async function initializeFaceLandmarker() {
+  if (faceLandmarker) return;
+
+  const { FaceLandmarker, FilesetResolver } = await import('@mediapipe/tasks-vision');
+
+  const filesetResolver = await FilesetResolver.forVisionTasks(
+    'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.9/wasm'
+  );
+
+  faceLandmarker = await FaceLandmarker.createFromOptions(filesetResolver, {
+    baseOptions: {
+      delegate: 'GPU',
+    },
+    runningMode: 'IMAGE',
+    numFaces: 1,
   });
-};
+}
+
+async function initializeHandLandmarker() {
+  if (handLandmarker) return;
+
+  const { HandLandmarker, FilesetResolver } = await import('@mediapipe/tasks-vision');
+
+  const filesetResolver = await FilesetResolver.forVisionTasks(
+    'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.9/wasm'
+  );
+
+  handLandmarker = await HandLandmarker.createFromOptions(filesetResolver, {
+    baseOptions: {
+      delegate: 'GPU',
+    },
+    runningMode: 'IMAGE',
+    numHands: 2,
+  });
+}
+
+async function initializePoseLandmarker() {
+  if (poseLandmarker) return;
+
+  const { PoseLandmarker, FilesetResolver } = await import('@mediapipe/tasks-vision');
+
+  const filesetResolver = await FilesetResolver.forVisionTasks(
+    'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.9/wasm'
+  );
+
+  poseLandmarker = await PoseLandmarker.createFromOptions(filesetResolver, {
+    baseOptions: {
+      delegate: 'GPU',
+    },
+    runningMode: 'IMAGE',
+  });
+}
+
+async function initializeImageSegmenter() {
+  if (imageSegmenter) return;
+
+  const { ImageSegmenter, FilesetResolver } = await import('@mediapipe/tasks-vision');
+
+  const filesetResolver = await FilesetResolver.forVisionTasks(
+    'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.9/wasm'
+  );
+
+  imageSegmenter = await ImageSegmenter.createFromOptions(filesetResolver, {
+    baseOptions: {
+      delegate: 'GPU',
+    },
+    runningMode: 'IMAGE',
+    outputCategoryMask: true,
+    outputConfidenceMasks: false,
+  });
+}
 
 export async function initializeMediaPipe(): Promise<void> {
-  try {
-    // Load MediaPipe - use the correct UMD bundle
-    await loadScript("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/vision_bundle.js");
+  if (!isClient) return;
 
-    // Face Landmarker
-    if (!faceDetectorReady) {
-      const { FaceLandmarker, FilesetResolver } = (window as any).Mediapipe;
+  if (initPromise) return initPromise;
 
-      const facesetResolver = await FilesetResolver.forVisionTasks(
-        "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/wasm"
-      );
-
-      (window as any).faceLandmarker = await FaceLandmarker.createFromOptions(facesetResolver, {
-        baseOptions: {
-          modelAssetPath: "https://storage.googleapis.com/mediapipe-models/image_classifier/mobilenet_v3_small/float32/1_metadata.tflite",
-        },
-        runningMode: "IMAGE",
-        numFaces: 1,
-      });
-
-      faceDetectorReady = true;
+  initPromise = (async () => {
+    try {
+      // Initialize all detectors in parallel
+      await Promise.all([
+        initializeFaceLandmarker(),
+        initializeHandLandmarker(),
+        initializePoseLandmarker(),
+        initializeImageSegmenter(),
+      ]);
+    } catch (error) {
+      console.error('Failed to initialize MediaPipe:', error);
+      // Reset promise so next call can retry
+      initPromise = null;
+      throw new Error(`MediaPipe initialization failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
+  })();
 
-    // Hand Landmarker
-    if (!handDetectorReady) {
-      const { HandLandmarker, FilesetResolver } = (window as any).Mediapipe;
-
-      const handsetResolver = await FilesetResolver.forVisionTasks(
-        "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/wasm"
-      );
-
-      (window as any).handLandmarker = await HandLandmarker.createFromOptions(handsetResolver, {
-        baseOptions: {
-          modelAssetPath: "https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16.tflite",
-        },
-        runningMode: "IMAGE",
-        numHands: 2,
-      });
-
-      handDetectorReady = true;
-    }
-
-    // Pose Landmarker
-    if (!poseDetectorReady) {
-      const { PoseLandmarker, FilesetResolver } = (window as any).Mediapipe;
-
-      const posesetResolver = await FilesetResolver.forVisionTasks(
-        "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/wasm"
-      );
-
-      (window as any).poseLandmarker = await PoseLandmarker.createFromOptions(posesetResolver, {
-        baseOptions: {
-          modelAssetPath: "https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16.tflite",
-        },
-        runningMode: "IMAGE",
-      });
-
-      poseDetectorReady = true;
-    }
-
-    // Image Segmenter
-    if (!segmenterReady) {
-      const { ImageSegmenter, FilesetResolver } = (window as any).Mediapipe;
-
-      const segmentsetResolver = await FilesetResolver.forVisionTasks(
-        "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/wasm"
-      );
-
-      (window as any).imageSegmenter = await ImageSegmenter.createFromOptions(segmentsetResolver, {
-        baseOptions: {
-          modelAssetPath: "https://storage.googleapis.com/mediapipe-models/image_segmenter/selfie_segmenter/float16.tflite",
-        },
-        runningMode: "IMAGE",
-        outputCategoryMask: true,
-      });
-
-      segmenterReady = true;
-    }
-  } catch (error) {
-    console.error("Failed to initialize MediaPipe:", error);
-    throw new Error("MediaPipe initialization failed");
-  }
+  return initPromise;
 }
 
 export function detectFace(canvas: HTMLCanvasElement): FaceLandmarks | null {
   try {
-    if (!faceDetectorReady || !(window as any).faceLandmarker) {
+    if (!faceLandmarker || !isClient) {
       return null;
     }
 
-    const results = (window as any).faceLandmarker.detectForVideo(canvas, performance.now());
+    const results = faceLandmarker.detect(canvas);
 
     if (!results.faceLandmarks || results.faceLandmarks.length === 0) {
       return null;
@@ -120,7 +123,7 @@ export function detectFace(canvas: HTMLCanvasElement): FaceLandmarks | null {
 
     const face = results.faceLandmarks[0];
 
-    // Convert landmarks to normalized coordinates
+    // Convert landmarks to pixel coordinates
     const landmarks = face.map((lm: any) => ({
       x: lm.x * canvas.width,
       y: lm.y * canvas.height,
@@ -139,18 +142,18 @@ export function detectFace(canvas: HTMLCanvasElement): FaceLandmarks | null {
       detected: true,
     };
   } catch (error) {
-    console.error("Face detection error:", error);
+    console.error('Face detection error:', error);
     return null;
   }
 }
 
 export function detectHands(canvas: HTMLCanvasElement): HandLandmarks[] | null {
   try {
-    if (!handDetectorReady || !(window as any).handLandmarker) {
+    if (!handLandmarker || !isClient) {
       return null;
     }
 
-    const results = (window as any).handLandmarker.detectForVideo(canvas, performance.now());
+    const results = handLandmarker.detect(canvas);
 
     if (!results.landmarks || results.landmarks.length === 0) {
       return null;
@@ -165,24 +168,24 @@ export function detectHands(canvas: HTMLCanvasElement): HandLandmarks[] | null {
 
       return {
         landmarks,
-        hand: results.handedness[index][0].categoryName === "Left" ? "left" : "right",
+        hand: results.handedness[index][0].categoryName === 'Left' ? 'left' : 'right',
         detected: true,
         handedness: results.handedness[index][0].score,
       };
     });
   } catch (error) {
-    console.error("Hand detection error:", error);
+    console.error('Hand detection error:', error);
     return null;
   }
 }
 
 export function detectPose(canvas: HTMLCanvasElement): PoseLandmarks | null {
   try {
-    if (!poseDetectorReady || !(window as any).poseLandmarker) {
+    if (!poseLandmarker || !isClient) {
       return null;
     }
 
-    const results = (window as any).poseLandmarker.detectForVideo(canvas, performance.now());
+    const results = poseLandmarker.detect(canvas);
 
     if (!results.landmarks || results.landmarks.length === 0) {
       return null;
@@ -199,18 +202,18 @@ export function detectPose(canvas: HTMLCanvasElement): PoseLandmarks | null {
       detected: true,
     };
   } catch (error) {
-    console.error("Pose detection error:", error);
+    console.error('Pose detection error:', error);
     return null;
   }
 }
 
 export function segmentImage(canvas: HTMLCanvasElement): ImageSegmentation | null {
   try {
-    if (!segmenterReady || !(window as any).imageSegmenter) {
+    if (!imageSegmenter || !isClient) {
       return null;
     }
 
-    const results = (window as any).imageSegmenter.segmentForVideo(canvas, performance.now());
+    const results = imageSegmenter.segment(canvas);
 
     if (!results.categoryMask) {
       return null;
@@ -243,7 +246,7 @@ export function segmentImage(canvas: HTMLCanvasElement): ImageSegmentation | nul
       detected: true,
     };
   } catch (error) {
-    console.error("Image segmentation error:", error);
+    console.error('Image segmentation error:', error);
     return null;
   }
 }
@@ -270,9 +273,6 @@ function calculateBoundingBox(
 }
 
 function estimateHeadRotation(landmarks: Array<{ x: number; y: number; z: number }>): { pitch: number; roll: number; yaw: number } {
-  // Simplified head rotation estimation using landmark positions
-  // This is a basic implementation; production code would use more sophisticated methods
-
   // Use specific landmarks for rotation calculation
   const noseTip = landmarks[1]; // Nose tip
   const rightEye = landmarks[33]; // Right eye outer corner
@@ -295,4 +295,14 @@ function estimateHeadRotation(landmarks: Array<{ x: number; y: number; z: number
     roll: roll * (180 / Math.PI),
     yaw: yaw * (180 / Math.PI),
   };
+}
+
+export function cleanup() {
+  if (isClient) {
+    faceLandmarker = null;
+    handLandmarker = null;
+    poseLandmarker = null;
+    imageSegmenter = null;
+    initPromise = null;
+  }
 }
