@@ -106,7 +106,7 @@ class MediaPipeManager {
 
     return FaceLandmarker.createFromOptions(filesetResolver, {
       baseOptions: {
-        modelAssetPath: 'https://storage.googleapis.com/mediapipe-models/image_classifier/mobilenet_v3_small/float32/1_metadata.tflite',
+        modelAssetPath: 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.9/wasm/face_landmarker.tflite',
         delegate: 'GPU',
       },
       runningMode: 'IMAGE',
@@ -119,7 +119,7 @@ class MediaPipeManager {
 
     return HandLandmarker.createFromOptions(filesetResolver, {
       baseOptions: {
-        modelAssetPath: 'https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16.tflite',
+        modelAssetPath: 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.9/wasm/hand_landmarker.tflite',
         delegate: 'GPU',
       },
       runningMode: 'IMAGE',
@@ -132,7 +132,7 @@ class MediaPipeManager {
 
     return PoseLandmarker.createFromOptions(filesetResolver, {
       baseOptions: {
-        modelAssetPath: 'https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16.tflite',
+        modelAssetPath: 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.9/wasm/pose_landmarker_lite.tflite',
         delegate: 'GPU',
       },
       runningMode: 'IMAGE',
@@ -144,7 +144,7 @@ class MediaPipeManager {
 
     return ImageSegmenter.createFromOptions(filesetResolver, {
       baseOptions: {
-        modelAssetPath: 'https://storage.googleapis.com/mediapipe-models/image_segmenter/selfie_segmenter/float16.tflite',
+        modelAssetPath: 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.9/wasm/selfie_segmenter.tflite',
         delegate: 'GPU',
       },
       runningMode: 'IMAGE',
