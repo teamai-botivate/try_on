@@ -1,0 +1,72 @@
+[
+  {
+    "id": "rings",
+    "name": "Rings",
+    "slug": "rings",
+    "description": "Try on stunning rings",
+    "icon": "💍"
+  },
+  {
+    "id": "earrings",
+    "name": "Earrings",
+    "slug": "earrings",
+    "description": "Explore beautiful earrings",
+    "icon": "💎"
+  },
+  {
+    "id": "necklaces",
+    "name": "Necklaces",
+    "slug": "necklaces",
+    "description": "Elegant necklace collection",
+    "icon": "📿"
+  },
+  {
+    "id": "bracelets",
+    "name": "Bracelets",
+    "slug": "bracelets",
+    "description": "Stylish bracelets",
+    "icon": "⌚"
+  },
+  {
+    "id": "bangles",
+    "name": "Bangles",
+    "slug": "bangles",
+    "description": "Traditional and modern bangles",
+    "icon": "🔔"
+  },
+  {
+    "id": "watches",
+    "name": "Watches",
+    "slug": "watches",
+    "description": "Luxury timepieces",
+    "icon": "⏱️"
+  },
+  {
+    "id": "pendants",
+    "name": "Pendants",
+    "slug": "pendants",
+    "description": "Precious pendants",
+    "icon": "⭐"
+  },
+  {
+    "id": "chains",
+    "name": "Chains",
+    "slug": "chains",
+    "description": "Premium chains",
+    "icon": "⛓️"
+  },
+  {
+    "id": "nose-rings",
+    "name": "Nose Rings",
+    "slug": "nose-rings",
+    "description": "Delicate nose rings",
+    "icon": "👃"
+  },
+  {
+    "id": "mangalsutra",
+    "name": "Mangalsutra",
+    "slug": "mangalsutra",
+    "description": "Sacred mangalsutra",
+    "icon": "🌟"
+  }
+]
