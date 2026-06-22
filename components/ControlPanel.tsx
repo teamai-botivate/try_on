@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import type { JewelleryProduct } from "@/types";
 import { useTryOnStore } from "@/lib/store";
 import SliderControl from "./SliderControl";
 import ActionButtons from "./ActionButtons";
