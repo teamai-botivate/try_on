@@ -14,7 +14,7 @@ export async function detectPose(canvas: HTMLCanvasElement): Promise<IPoseLandma
       return null;
     }
 
-    const results = landmarker.detect(canvas);
+    const results = landmarker.detectForVideo(canvas, performance.now());
 
     if (!results.landmarks || results.landmarks.length === 0) {
       return null;

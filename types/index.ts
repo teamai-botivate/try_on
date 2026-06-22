@@ -75,6 +75,27 @@ export interface ProcessedImage {
   quality: ImageQuality;
 }
 
+export interface JewelleryAsset {
+  original: HTMLImageElement;
+  canvas: HTMLCanvasElement;
+  width: number;
+  height: number;
+  originalWidth: number;
+  originalHeight: number;
+  bounds: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
+  center: {
+    x: number;
+    y: number;
+  };
+  quality: ImageQuality;
+  sourceFileName: string;
+}
+
 export interface ImageQuality {
   isValid: boolean;
   isBlurry: boolean;
@@ -87,6 +108,7 @@ export interface ImageQuality {
 export interface TryOnState {
   product: JewelleryProduct | null;
   image: ProcessedImage | null;
+  jewelleryAsset: JewelleryAsset | null;
   faceLandmarks: FaceLandmarks | null;
   handLandmarks: HandLandmarks[] | null;
   poseLandmarks: PoseLandmarks | null;

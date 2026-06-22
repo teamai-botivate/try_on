@@ -1,9 +1,10 @@
 import { create } from "zustand";
-import type { TryOnState, JewelleryProduct, ProcessedImage, FaceLandmarks, HandLandmarks, PoseLandmarks, ImageSegmentation, JewelleryControls } from "@/types";
+import type { TryOnState, JewelleryProduct, ProcessedImage, JewelleryAsset, FaceLandmarks, HandLandmarks, PoseLandmarks, ImageSegmentation, JewelleryControls } from "@/types";
 
 interface TryOnStore extends TryOnState {
   setProduct: (product: JewelleryProduct | null) => void;
   setImage: (image: ProcessedImage | null) => void;
+  setJewelleryAsset: (asset: JewelleryAsset | null) => void;
   setFaceLandmarks: (landmarks: FaceLandmarks | null) => void;
   setHandLandmarks: (landmarks: HandLandmarks[] | null) => void;
   setPoseLandmarks: (landmarks: PoseLandmarks | null) => void;
@@ -32,6 +33,7 @@ const defaultControls: JewelleryControls = {
 const defaultState: TryOnState = {
   product: null,
   image: null,
+  jewelleryAsset: null,
   faceLandmarks: null,
   handLandmarks: null,
   poseLandmarks: null,
@@ -46,6 +48,7 @@ export const useTryOnStore = create<TryOnStore>((set) => ({
 
   setProduct: (product) => set({ product }),
   setImage: (image) => set({ image }),
+  setJewelleryAsset: (jewelleryAsset) => set({ jewelleryAsset }),
   setFaceLandmarks: (faceLandmarks) => set({ faceLandmarks }),
   setHandLandmarks: (handLandmarks) => set({ handLandmarks }),
   setPoseLandmarks: (poseLandmarks) => set({ poseLandmarks }),

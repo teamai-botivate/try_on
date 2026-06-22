@@ -14,7 +14,7 @@ export async function detectFace(canvas: HTMLCanvasElement): Promise<IFaceLandma
       return null;
     }
 
-    const results = landmarker.detect(canvas);
+    const results = landmarker.detectForVideo(canvas, performance.now());
 
     if (!results.faceLandmarks || results.faceLandmarks.length === 0) {
       return null;

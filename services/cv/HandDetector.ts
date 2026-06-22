@@ -14,7 +14,7 @@ export async function detectHands(canvas: HTMLCanvasElement): Promise<IHandLandm
       return null;
     }
 
-    const results = landmarker.detect(canvas);
+    const results = landmarker.detectForVideo(canvas, performance.now());
 
     if (!results.landmarks || results.landmarks.length === 0) {
       return null;

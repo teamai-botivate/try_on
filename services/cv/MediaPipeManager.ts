@@ -121,7 +121,7 @@ class MediaPipeManager {
         modelAssetPath: MODEL_ASSET_PATHS.faceLandmarker,
         delegate: 'GPU',
       },
-      runningMode: 'IMAGE',
+      runningMode: 'VIDEO',
       numFaces: 1,
     });
   }
@@ -134,7 +134,7 @@ class MediaPipeManager {
         modelAssetPath: MODEL_ASSET_PATHS.handLandmarker,
         delegate: 'GPU',
       },
-      runningMode: 'IMAGE',
+      runningMode: 'VIDEO',
       numHands: 2,
     });
   }
@@ -147,7 +147,7 @@ class MediaPipeManager {
         modelAssetPath: MODEL_ASSET_PATHS.poseLandmarker,
         delegate: 'GPU',
       },
-      runningMode: 'IMAGE',
+      runningMode: 'VIDEO',
     });
   }
 
@@ -159,7 +159,7 @@ class MediaPipeManager {
         modelAssetPath: MODEL_ASSET_PATHS.imageSegmenter,
         delegate: 'GPU',
       },
-      runningMode: 'IMAGE',
+      runningMode: 'VIDEO',
       outputCategoryMask: true,
       outputConfidenceMasks: false,
     });
