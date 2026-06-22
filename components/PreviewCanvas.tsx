@@ -2,12 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import type { ProcessedImage, JewelleryProduct, FaceLandmarks, HandLandmarks, PoseLandmarks } from "@/types";
+import type { ProcessedImage, FaceLandmarks, HandLandmarks, PoseLandmarks } from "@/types";
 import { useTryOnStore } from "@/lib/store";
 
 interface PreviewCanvasProps {
   image: ProcessedImage;
-  product: JewelleryProduct;
   faceLandmarks: FaceLandmarks | null;
   handLandmarks: HandLandmarks[] | null;
   poseLandmarks: PoseLandmarks | null;
@@ -16,7 +15,6 @@ interface PreviewCanvasProps {
 
 export default function PreviewCanvas({
   image,
-  product,
   faceLandmarks,
   handLandmarks,
   poseLandmarks,
