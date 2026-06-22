@@ -24,7 +24,6 @@ export default function TryOnWorkspace({ product }: TryOnWorkspaceProps) {
   const setPoseLandmarks = useTryOnStore((state) => state.setPoseLandmarks);
   const faceLandmarks = useTryOnStore((state) => state.faceLandmarks);
   const handLandmarks = useTryOnStore((state) => state.handLandmarks);
-  const poseLandmarks = useTryOnStore((state) => state.poseLandmarks);
 
   // Initialize MediaPipe and detect landmarks
   useEffect(() => {
