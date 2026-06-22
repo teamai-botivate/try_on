@@ -24,11 +24,11 @@ const loadScript = (src: string): Promise<void> => {
 export async function initializeMediaPipe(): Promise<void> {
   try {
     // Load MediaPipe
-    await loadScript("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/wasm");
+    await loadScript("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0");
 
     // Face Landmarker
     if (!faceDetectorReady) {
-      const { FaceLandmarker, FilesetResolver } = (window as any).Mediapipe;
+      const { FaceLandmarker, FilesetResolver } = (window as any);
 
       const facesetResolver = await FilesetResolver.forVisionTasks(
         "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/wasm"
@@ -47,7 +47,7 @@ export async function initializeMediaPipe(): Promise<void> {
 
     // Hand Landmarker
     if (!handDetectorReady) {
-      const { HandLandmarker, FilesetResolver } = (window as any).Mediapipe;
+      const { HandLandmarker, FilesetResolver } = (window as any);
 
       const handsetResolver = await FilesetResolver.forVisionTasks(
         "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/wasm"
@@ -66,7 +66,7 @@ export async function initializeMediaPipe(): Promise<void> {
 
     // Pose Landmarker
     if (!poseDetectorReady) {
-      const { PoseLandmarker, FilesetResolver } = (window as any).Mediapipe;
+      const { PoseLandmarker, FilesetResolver } = (window as any);
 
       const posesetResolver = await FilesetResolver.forVisionTasks(
         "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/wasm"
@@ -84,7 +84,7 @@ export async function initializeMediaPipe(): Promise<void> {
 
     // Image Segmenter
     if (!segmenterReady) {
-      const { ImageSegmenter, FilesetResolver } = (window as any).Mediapipe;
+      const { ImageSegmenter, FilesetResolver } = (window as any);
 
       const segmentsetResolver = await FilesetResolver.forVisionTasks(
         "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/wasm"
