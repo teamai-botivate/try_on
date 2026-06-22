@@ -3,6 +3,17 @@
 import type { FaceLandmarker, HandLandmarker, PoseLandmarker, ImageSegmenter } from '@mediapipe/tasks-vision';
 import { getFilesetResolver, resetFilesetResolver } from './FilesetResolver';
 
+const MODEL_ASSET_PATHS = {
+  faceLandmarker:
+    'https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task',
+  handLandmarker:
+    'https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task',
+  poseLandmarker:
+    'https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task',
+  imageSegmenter:
+    'https://storage.googleapis.com/mediapipe-models/image_segmenter/deeplab_v3/float32/1/deeplab_v3.tflite',
+} as const;
+
 interface InitializationState {
   faceLandmarker: FaceLandmarker | null;
   handLandmarker: HandLandmarker | null;
@@ -107,6 +118,7 @@ class MediaPipeManager {
 
     return FaceLandmarker.createFromOptions(filesetResolver, {
       baseOptions: {
+        modelAssetPath: MODEL_ASSET_PATHS.faceLandmarker,
         delegate: 'GPU',
       },
       runningMode: 'IMAGE',
@@ -119,6 +131,7 @@ class MediaPipeManager {
 
     return HandLandmarker.createFromOptions(filesetResolver, {
       baseOptions: {
+        modelAssetPath: MODEL_ASSET_PATHS.handLandmarker,
         delegate: 'GPU',
       },
       runningMode: 'IMAGE',
@@ -131,6 +144,7 @@ class MediaPipeManager {
 
     return PoseLandmarker.createFromOptions(filesetResolver, {
       baseOptions: {
+        modelAssetPath: MODEL_ASSET_PATHS.poseLandmarker,
         delegate: 'GPU',
       },
       runningMode: 'IMAGE',
@@ -142,6 +156,7 @@ class MediaPipeManager {
 
     return ImageSegmenter.createFromOptions(filesetResolver, {
       baseOptions: {
+        modelAssetPath: MODEL_ASSET_PATHS.imageSegmenter,
         delegate: 'GPU',
       },
       runningMode: 'IMAGE',

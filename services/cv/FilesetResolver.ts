@@ -2,6 +2,8 @@ import type { FilesetResolver as FilesetResolverType } from '@mediapipe/tasks-vi
 
 let filesetResolverInstance: FilesetResolverType | null = null;
 
+export const MEDIAPIPE_TASKS_VERSION = '0.10.35';
+
 export async function getFilesetResolver(): Promise<FilesetResolverType> {
   if (filesetResolverInstance) {
     return filesetResolverInstance;
@@ -10,7 +12,7 @@ export async function getFilesetResolver(): Promise<FilesetResolverType> {
   const { FilesetResolver } = await import('@mediapipe/tasks-vision');
 
   filesetResolverInstance = await FilesetResolver.forVisionTasks(
-    'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.9/wasm'
+    `https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@${MEDIAPIPE_TASKS_VERSION}/wasm`
   );
 
   return filesetResolverInstance;

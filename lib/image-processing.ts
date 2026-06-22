@@ -1,7 +1,7 @@
 import type { ImageQuality, ProcessedImage } from "@/types";
 
 export async function analyzeImageQuality(canvas: HTMLCanvasElement): Promise<ImageQuality> {
-  const ctx = canvas.getContext("2d");
+  const ctx = canvas.getContext("2d", { willReadFrequently: true });
   if (!ctx) {
     return {
       isValid: false,
@@ -71,7 +71,7 @@ export async function analyzeImageQuality(canvas: HTMLCanvasElement): Promise<Im
 }
 
 function detectBlur(canvas: HTMLCanvasElement): boolean {
-  const ctx = canvas.getContext("2d");
+  const ctx = canvas.getContext("2d", { willReadFrequently: true });
   if (!ctx) return false;
 
   // Sample a region from the center of the image
@@ -166,7 +166,7 @@ export function correctImageOrientation(canvas: HTMLCanvasElement, orientation: 
 }
 
 export function enhanceImageQuality(canvas: HTMLCanvasElement): HTMLCanvasElement {
-  const ctx = canvas.getContext("2d");
+  const ctx = canvas.getContext("2d", { willReadFrequently: true });
   if (!ctx) return canvas;
 
   const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -216,7 +216,7 @@ export async function processImage(file: File): Promise<ProcessedImage> {
   const canvas = document.createElement("canvas");
   canvas.width = img.width;
   canvas.height = img.height;
-  const ctx = canvas.getContext("2d");
+  const ctx = canvas.getContext("2d", { willReadFrequently: true });
   if (!ctx) throw new Error("Failed to get canvas context");
   ctx.drawImage(img, 0, 0);
 
