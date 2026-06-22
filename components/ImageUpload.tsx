@@ -4,7 +4,8 @@ import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { motion } from "framer-motion";
 import { useTryOnStore } from "@/lib/store";
-import { validateImageFile, processImage } from "@/lib/image-processing";
+import { validateImageFile } from "@/lib/image-loader";
+import { processImage } from "@/lib/image-processing";
 
 export default function ImageUpload() {
   const [error, setError] = useState<string | null>(null);
