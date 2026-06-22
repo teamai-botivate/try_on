@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { initializeMediaPipe, detectFace, detectHands, detectPose } from "@/services/mediapipe-service";
 import type { FaceLandmarks, HandLandmarks, PoseLandmarks } from "@/types";
 
