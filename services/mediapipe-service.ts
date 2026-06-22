@@ -279,7 +279,6 @@ function estimateHeadRotation(landmarks: Array<{ x: number; y: number; z: number
   const leftEye = landmarks[263]; // Left eye outer corner
   const rightMouth = landmarks[61]; // Right mouth corner
   const leftMouth = landmarks[291]; // Left mouth corner
-  const chin = landmarks[152]; // Chin
 
   // Calculate angles
   const eyeDistance = Math.hypot(rightEye.x - leftEye.x, rightEye.y - leftEye.y);

@@ -101,11 +101,10 @@ function detectBlur(canvas: HTMLCanvasElement): boolean {
 }
 
 export function correctImageOrientation(canvas: HTMLCanvasElement, orientation: number): HTMLCanvasElement {
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return canvas;
-
   const { width, height } = canvas;
   const newCanvas = document.createElement("canvas");
+  const ctx = newCanvas.getContext("2d");
+  if (!ctx) return canvas;
 
   switch (orientation) {
     case 2: // Flip horizontal
