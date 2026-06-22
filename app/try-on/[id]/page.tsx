@@ -21,6 +21,7 @@ export default function TryOnPage() {
   const setStoreProduct = useTryOnStore((state: any) => state.setProduct);
   const storeProduct = useTryOnStore((state: any) => state.product);
   const storeImage = useTryOnStore((state: any) => state.image);
+  const resetStore = useTryOnStore((state: any) => state.reset);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -29,8 +30,9 @@ export default function TryOnPage() {
       setLoading(false);
     };
 
+    resetStore();
     fetchProduct();
-  }, [productId]);
+  }, [productId, resetStore]);
 
   useEffect(() => {
     if (product && !storeProduct) {
