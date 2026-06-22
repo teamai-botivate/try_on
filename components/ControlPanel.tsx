@@ -6,11 +6,7 @@ import { useTryOnStore } from "@/lib/store";
 import SliderControl from "./SliderControl";
 import ActionButtons from "./ActionButtons";
 
-interface ControlPanelProps {
-  product: JewelleryProduct;
-}
-
-export default function ControlPanel({ product }: ControlPanelProps) {
+export default function ControlPanel() {
   const controls = useTryOnStore((state) => state.controls);
   const setControls = useTryOnStore((state) => state.setControls);
   const resetControls = useTryOnStore((state) => state.resetControls);
